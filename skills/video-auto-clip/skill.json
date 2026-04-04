@@ -1,0 +1,10 @@
+{
+  "name": "video-auto-clip",
+  "version": "1.0.0",
+  "description": "AI驱动的视频智能剪辑技能：视觉分析定位敏感片段+ffmpeg精准剪辑，支持去水印",
+  "author": "xia",
+  "emoji": "✂️",
+  "tags": ["video", "clip", "edit", "censorship", "delogo"],
+  "tools": ["video_auto_clip.py"],
+  "dependencies": ["ffmpeg", "ffprobe"]
+}
