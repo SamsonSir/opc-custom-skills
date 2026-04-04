@@ -88,7 +88,7 @@
 
 ```bash
 # 克隆仓库
-git clone https://github.com/JokerSu/opc-custom-skills.git
+git clone https://github.com/SamsonSir/opc-custom-skills.git
 
 # 安装技能到 OpenClaw
 cd opc-custom-skills
