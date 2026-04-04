@@ -14,6 +14,7 @@ const { execSync } = require('child_process');
 const APP_TOKEN = 'QqKbbaGvvah8CgsMSWzcHZcMn1c';
 const TABLE_ID = 'tblEmZH6jYBZKWH9';
 const SKILLS_DIR = path.join(__dirname, '..', 'skills');
+const GITHUB_REPO_URL = 'https://github.com/SamsonSir/opc-custom-skills';
 
 // 获取技能列表
 function getCustomSkills() {
@@ -69,12 +70,16 @@ function getCustomSkills() {
         const category = getCategory(skillName, description);
         const tags = getTags(skillName, description);
         
+        // 生成 GitHub 链接
+        const githubLink = `${GITHUB_REPO_URL}/tree/main/skills/${skillName}`;
+        
         skills.push({
             name: skillName,
             description: description || `${skillName} - OPC自定义技能`,
             category,
             tags,
-            path: skillPath
+            path: skillPath,
+            githubLink
         });
     }
     
@@ -141,7 +146,12 @@ function generateSyncData() {
             "状态": "OPC原创",
             "发现日期": today,
             "标签": skill.tags,
-            "备注": "自定义技能，位于 opc-custom-skills 仓库"
+            "备注": "自定义技能，位于 opc-custom-skills 仓库",
+            "链接": {
+                "link": skill.githubLink,
+                "text": skill.name,
+                "type": "url"
+            }
         }
     }));
     
