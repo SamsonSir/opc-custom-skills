@@ -1,0 +1,56 @@
+{
+  "name": "@jackwener/opencli",
+  "version": "0.7.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "description": "Make any website your CLI. AI-powered.",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "type": "module",
+  "main": "dist/main.js",
+  "bin": {
+    "opencli": "dist/main.js"
+  },
+  "scripts": {
+    "dev": "tsx src/main.ts",
+    "build": "tsc && npm run clean-yaml && npm run copy-yaml && npm run build-manifest",
+    "build-manifest": "node dist/build-manifest.js",
+    "clean-yaml": "node -e \"const{readdirSync:r,rmSync:d,existsSync:e,statSync:s}=require('fs'),p=require('path');function w(dir){if(!e(dir))return;for(const f of r(dir)){const fp=p.join(dir,f);s(fp).isDirectory()?w(fp):/\\.ya?ml$/.test(f)&&d(fp)}}w('dist/clis')\"",
+    "copy-yaml": "node -e \"const{readdirSync:r,copyFileSync:c,mkdirSync:m,existsSync:e,statSync:s}=require('fs'),p=require('path');function w(src,dst){if(!e(src))return;for(const f of r(src)){const sp=p.join(src,f),dp=p.join(dst,f);s(sp).isDirectory()?w(sp,dp):/\\.ya?ml$/.test(f)&&(m(p.dirname(dp),{recursive:!0}),c(sp,dp))}}w('src/clis','dist/clis')\"",
+    "start": "node dist/main.js",
+    "typecheck": "tsc --noEmit",
+    "lint": "tsc --noEmit",
+    "prepublishOnly": "npm run build",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "keywords": [
+    "cli",
+    "browser",
+    "web",
+    "ai",
+    "playwright"
+  ],
+  "author": "jackwener",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jackwener/opencli.git"
+  },
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "cli-table3": "^0.6.5",
+    "commander": "^13.1.0",
+    "js-yaml": "^4.1.0"
+  },
+  "devDependencies": {
+    "@playwright/mcp": "^0.0.68",
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^22.13.10",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.2",
+    "vitest": "^4.1.0"
+  }
+}

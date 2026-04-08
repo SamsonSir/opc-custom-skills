@@ -1,0 +1,82 @@
+name: CI
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main, dev]
+  schedule:
+    - cron: '0 8 * * 1'  # Weekly Monday 08:00 UTC — smoke tests
+  workflow_dispatch:
+
+jobs:
+  # ── Fast gate: typecheck + build ──
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type check
+        run: npx tsc --noEmit
+
+      - name: Build
+        run: npm run build
+
+  # ── Unit tests (vitest shard) ──
+  unit-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        shard: [1, 2]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run unit tests (shard ${{ matrix.shard }}/2)
+        run: npx vitest run src/ --reporter=verbose --shard=${{ matrix.shard }}/2
+
+  # ── Smoke tests (scheduled / manual only) ──
+  smoke-test:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Setup Chrome + xvfb
+        uses: ./.github/actions/setup-chrome
+        id: setup-chrome
+
+      - name: Build
+        run: npm run build
+
+      - name: Run smoke tests
+        run: |
+          xvfb-run --auto-servernum --server-args="-screen 0 1280x720x24" \
+            npx vitest run tests/smoke/ --reporter=verbose
+        env:
+          OPENCLI_BROWSER_EXECUTABLE_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
+    timeout-minutes: 15

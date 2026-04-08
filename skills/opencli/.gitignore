@@ -1,0 +1,6 @@
+node_modules/
+dist/
+*.tsbuildinfo
+.opencli/
+.mcp.json
+*.log
