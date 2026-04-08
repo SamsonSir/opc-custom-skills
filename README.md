@@ -55,7 +55,6 @@
 | [skill-vetter](skills/skill-vetter/) | 技能安全审查 | v1.0 |
 | [opencli](skills/opencli/) | 网站CLI工具 | v1.0 |
 | [qmd](skills/qmd/) | 本地搜索/索引CLI | v1.0 |
-| [dingtalk-ai-table](skills/dingtalk-ai-table/) | 钉钉AI表格操作 | v1.0 |
 
 ### AI助手
 | 技能名称 | 描述 | 版本 |
