@@ -1,0 +1,12 @@
+{
+  "name": "feishu-knowledge-extractor",
+  "version": "1.0.0",
+  "description": "飞书知识库（Wiki）自动提取与同步工具",
+  "main": "bin/feishu-extractor",
+  "scripts": {
+    "install": "./install.sh"
+  },
+  "keywords": ["feishu", "wiki", "extractor"],
+  "author": "JokerSu",
+  "license": "MIT"
+}

@@ -1,0 +1,61 @@
+#!/usr/bin/env python3
+"""
+飞书知识库提取器 - 主入口
+Usage: feishu-extractor [--rebuild-index|--incremental|--date YYYY-MM-DD|--range START END]
+"""
+import argparse
+import sys
+from pathlib import Path
+
+# 添加 lib 到路径
+sys.path.insert(0, str(Path(__file__).parent.parent / 'lib'))
+
+from extractor import IndexParser, ContentProcessor
+from config import load_config
+
+
+def main():
+    parser = argparse.ArgumentParser(description='飞书知识库自动提取工具')
+    parser.add_argument('--rebuild-index', action='store_true', help='重建完整索引')
+    parser.add_argument('--incremental', action='store_true', help='增量更新今天')
+    parser.add_argument('--date', type=str, help='处理指定日期 (YYYY-MM-DD)')
+    parser.add_argument('--range', nargs=2, metavar=('START', 'END'), help='处理日期范围')
+    parser.add_argument('--config', '-c', type=str, default='.env', help='配置文件路径')
+    
+    args = parser.parse_args()
+    
+    # 加载配置
+    config = load_config(args.config)
+    
+    # 初始化组件
+    parser = IndexParser(config)
+    processor = ContentProcessor(config)
+    
+    if args.rebuild_index:
+        print('[INFO] 重建完整索引...')
+        parser.rebuild_index()
+        print('[SUCCESS] 索引重建完成')
+        
+    elif args.incremental:
+        print('[INFO] 执行增量更新...')
+        processor.incremental_update()
+        print('[SUCCESS] 增量更新完成')
+        
+    elif args.date:
+        print(f'[INFO] 处理日期: {args.date}')
+        processor.process_date(args.date)
+        print('[SUCCESS] 处理完成')
+        
+    elif args.range:
+        start, end = args.range
+        print(f'[INFO] 处理日期范围: {start} ~ {end}')
+        processor.process_range(start, end)
+        print('[SUCCESS] 范围处理完成')
+        
+    else:
+        parser.print_help()
+        sys.exit(1)
+
+
+if __name__ == '__main__':
+    main()
