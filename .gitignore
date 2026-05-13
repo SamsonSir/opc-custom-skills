@@ -37,3 +37,7 @@ Thumbs.db
 scripts/install-local.sh
 data/
 temp/
+**/references/*real*.json
+**/references/*test*.json
+**/references/*private*.json
+**/clip_outputs/

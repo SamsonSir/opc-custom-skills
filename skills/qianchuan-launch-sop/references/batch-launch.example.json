@@ -1,0 +1,11 @@
+[
+  {
+    "product_id": "1234567890123456789",
+    "product_name": "示例商品名称",
+    "sale_price": 299,
+    "unit_cost": 40,
+    "sign_rate": 0.55,
+    "material_dir": "/path/to/clip_outputs/示例商品名称",
+    "daily_budget": 300
+  }
+]

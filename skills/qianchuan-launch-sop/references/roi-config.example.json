@@ -1,0 +1,41 @@
+{
+  "version": "2026-04-16",
+  "scenario": "qianchuan_product_launch",
+  "rounding": {
+    "internal_scale": 4,
+    "page_scale": 2
+  },
+  "defaults": {
+    "sign_rate": 0.8,
+    "ship_rate": 0.9,
+    "shipping_fee": 0.0,
+    "commission_rate": 0.05,
+    "profit_rate": 0.01
+  },
+  "sku_items": [
+    {
+      "sku_name": "默认SKU",
+      "sale_price": 32.0,
+      "sku_ratio": 1.0,
+      "unit_cost": 16.0
+    }
+  ],
+  "formula": {
+    "avg_order_value": "sum(sale_price * sku_ratio)",
+    "weighted_unit_cost": "sum(unit_cost * sku_ratio)",
+    "allowable_ad_cost": "avg_order_value * sign_rate * ship_rate - shipping_fee * ship_rate - avg_order_value * sign_rate * ship_rate * commission_rate - avg_order_value * profit_rate - weighted_unit_cost * sign_rate * ship_rate",
+    "target_roi": "avg_order_value / allowable_ad_cost"
+  },
+  "execution_rules": {
+    "use_user_roi_if_provided": true,
+    "block_when_allowable_ad_cost_lte_zero": true,
+    "page_fill_precision": 2
+  },
+  "example_result": {
+    "avg_order_value": 32.0,
+    "weighted_unit_cost": 16.0,
+    "allowable_ad_cost": 14.72,
+    "target_roi": 2.1739,
+    "page_fill_roi": 2.17
+  }
+}
