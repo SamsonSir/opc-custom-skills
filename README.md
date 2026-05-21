@@ -51,6 +51,7 @@
 ### 开发工具
 | 技能名称 | 描述 | 版本 |
 |---------|------|------|
+| [dramaya-workflow](skills/dramaya-workflow/) | Dramaya 两人团队协作工作流，支持今天任务、开始、收工短命令 | v1.0 |
 | [github-kb](skills/github-kb/) | GitHub知识库管理 | v1.0 |
 | [find-skills](skills/find-skills/) | 技能发现和安装助手 | v1.0 |
 | [skill-vetter](skills/skill-vetter/) | 技能安全审查 | v1.0 |
@@ -104,9 +105,9 @@ cd opc-custom-skills
 
 ## 📊 技能统计
 
-- 总技能数：38+
+- 总技能数：39+
 - 分类数：10+
-- 最后更新：2026-05-13
+- 最后更新：2026-05-21
 
 ## 🔗 相关链接
 

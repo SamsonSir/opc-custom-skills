@@ -1,0 +1,4 @@
+interface:
+  display_name: "Dramaya 工作流"
+  short_description: "用今天任务、开始、收工推进 Dramaya 协作"
+  default_prompt: "今天任务"
